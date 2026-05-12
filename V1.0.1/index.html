@@ -1,0 +1,155 @@
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+
+  <style>
+    body {
+      text-align: center;
+      
+    }
+    .testclass {
+      border: 2px solid black;
+      width: 250px;
+      margin: 20px auto;
+      border-radius: 35px;
+    }
+    .commonrarity {
+      background-color: #ababab;
+    }
+    .uncommonrarity {
+      background-color: #85d26d;
+    }
+    .monsterknop {
+      font-size: 30px;
+      border-radius: 15px;
+    }
+    .epicrarity {
+      background-color: #a155c2;
+    }
+    .ultra-rare-rarity {
+      background: linear-gradient(to top right, #fa0050,#fa6900,#b9c54c,#6fbf6a,#2d95da,#a561bf);
+    }
+    .godlyrarity {
+      box-shadow: 0 0 20px gold;
+    }
+    #versiontext {
+      top: 1px;
+      right: 3px;
+      position: absolute;
+      border: none;
+    }
+    .switchbtn {
+      position: absolute ;
+      top: 3px;
+    }
+    
+  </style>
+</head>
+<body>
+  <button class="monsterknop" onclick="krijgmonster()">get your monster!</button>
+  <button onclick="versionswitch()" id="versiontext">v1.0.1</button>
+  
+  <script src="Monsterlist.js?v=2"></script>
+  
+   <script>
+     
+     //variables
+   let totaltries = 0;
+   let neededchanceone = 0.003;
+   let neededchancetwo = 0.001;
+   let versionbtn = false;
+   
+   //krijgmonster
+    function krijgmonster() {
+      totaltries = totaltries + 1
+      let monster;
+      let chance = Math.random();
+      
+      //pity system
+      if (totaltries >= 50) {
+        neededchanceone = neededchanceone * 2
+        neededchancetwo = neededchancetwo * 2
+        totaltries = 0
+        console.log("gained upgrade");
+        console.log("ultra-rare odds now: " + (neededchanceone - neededchancetwo) * 100 + "%");
+        console.log("godly odds now: " + neededchancetwo * 100 + "%")
+      }
+      
+      //extra rarities system
+      if (chance <= neededchancetwo) {
+       let randomIndex = Math.floor(Math.random() * godlymonster.length);
+        monster = godlymonster[randomIndex];
+      } else if (chance <= neededchanceone) {
+       let randomIndex = Math.floor(Math.random() * ultrararemonster.length);
+        monster = ultrararemonster[randomIndex];
+      }  else {
+        let randomIndex = Math.floor(Math.random() * monsters.length);
+        monster = monsters[randomIndex];
+      }
+     
+   //creating monster card
+      let randommonstername = monster.name;
+      let randommonsterrarity = monster.rarity;
+      let randommonsterdescription = monster.description;
+      let randommonstertype = monster.type;
+      
+     let monstercard = document.createElement("div");
+     let monstercardname = document.createElement("h2");
+     let monstercarddescription = document.createElement("p");
+     let monstercardtype = document.createElement("p")
+      
+     monstercardname.innerText = randommonstername
+     monstercarddescription.innerText = randommonsterdescription
+     monstercardtype.innerText = randommonstertype
+     
+     document.body.appendChild(monstercard);
+     monstercard.classList.add("testclass");
+     monstercard.appendChild(monstercardname);
+     monstercard.appendChild(monstercarddescription);
+     monstercard.appendChild(monstercardtype)
+     monstercardtype.classList.add("typeclass")
+     
+  //rarities
+     if (randommonsterrarity === "common") {
+       monstercard.classList.add("commonrarity");
+     } else if (randommonsterrarity === "uncommon") {
+       monstercard.classList.add("uncommonrarity");
+     } else if (randommonsterrarity === "epic") {
+       monstercard.classList.add("epicrarity");
+     } else if (randommonsterrarity === "ultra-rare") {
+       monstercard.classList.add("ultra-rare-rarity");
+       } else if (randommonsterrarity === "godly") {
+         monstercard.classList.add("godlyrarity")
+       }
+       
+       //pity resets
+       if (randommonsterrarity === "godly") {
+         console.log("godly reset, kans weer 0.1%");
+         neededchancetwo = 0.001
+       } else if (randommonsterrarity === "ultra-rare") {
+         console.log("ultra rare rest, kans weer 0,2%")
+       }
+          
+       //remove card
+       monstercard.onclick = function() {
+       monstercard.remove()
+       }
+    }
+    
+    //versionswitch
+    function versionswitch() {
+      console.log("starting version switch...");
+    if (versionbtn === false) { versionto =  document.createElement("a");
+     versionto.innerText = "go to version switcher"
+     versionto.href = "../index.html"
+     document.body.appendChild(versionto)
+     versionto.classList.add("switchbtn")
+     versionbtn = true;
+     
+     document.getElementById("versiontext").style.display = "none"
+    }
+    
+    }
+  </script>
+</body> 
