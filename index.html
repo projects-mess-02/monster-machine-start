@@ -1,0 +1,117 @@
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  
+  <style>
+    body {
+      text-align: center;
+    }
+    #selector {
+      font-size: 28px;
+      border-radius: 25px;
+      text-align: center;
+      border: 3px solid black;
+    }
+    #link {
+      border: 2px solid black;
+      font-size: 20px;
+      color: black;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    div {
+      text-align: justify;
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+<h1 id="maintitel">MONSTER MACHINE</h1>
+  <select id="selector">
+    <option>version 1.1 (most recent)</option>
+    <option>version 1.0.2</option>
+    <option>version 1.0.1</option>
+    <option>version 1.0</option>
+  </select>
+  <br>
+  <br>
+  <br>
+    <a id="link" href="">launch this version</a>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h2>update logs</h2>
+    <br>
+    <div>
+    <h3>version 1.1</h3>
+      <h4>06-05-2026</h4>
+    <ul>
+      <p><strong>added</strong></p>
+      <li>first version of saving added</li>
+      <li>a few new monsters have been added</li>
+      <p><strong>changes</strong></p>
+      <li>Some parts of the code has been changed to be more stable</li>
+      <li>some style settings in the code have been changed</li>
+    </ul>
+    </div>
+    <div>
+    <h3>version 1.0.2</h3>
+      <h4>31-04-2026</h4>
+    <ul>
+      <p><strong>added</strong></p>
+      <li>slight chance additions</li>
+      <li>day and night themes added</li>
+      <p><strong>changes</strong></p>
+      <li>A new version of the pity system not completely resetting odds</li>
+      <p><strong>fixes</strong></p>
+      <li>fixed the bug where ultra rare could stack and exclude all other monsters</li>
+    </ul>
+    </div>
+    <div>
+      <h3>version 1.0.1</h3>
+      <h4>30-04-2026</h4>
+    <ul>
+      <p><strong>added</strong></p>
+      <li>Added extra monsters</li>
+      <li>added types</li>
+      <p><strong>changes</strong></p>
+      <li>pity system resets when you get the monster to prevent 100%</li>
+
+    </ul>
+    </div>
+    <div>
+    <h3>version 1.0</h3>
+    <h4>29-04-2026</h4>
+    <ul>
+      <li>First official version</li>
+      <li>Added godly and ultra rare monsters</li>
+      <li>Added version launcher</li>
+      <li>Added monster deletion</li>
+    </ul>
+    </div>
+  <script>
+    let dropdown = document.getElementById("selector")
+    
+    setInterval(() => {
+      let chosen = dropdown.value
+      
+      if (chosen === "version 1.1 (most recent)") {
+        document.getElementById("link").href = "V1.1/index.html" 
+     } else if (chosen === "version 1.0.2") {
+        document.getElementById("link").href = "V1.0.2/index.html" 
+      } else if (chosen === "version 1.0.1") {
+        document.getElementById("link").href = "V1.0.1/index.html"
+      }
+      else if (chosen === "version 1.0") {
+        document.getElementById("link").href = "V1/index.html"
+      }
+    }, 100)
+  </script>
+     <script>
+    if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+  </script>
+</body>
