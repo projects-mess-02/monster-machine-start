@@ -1,0 +1,268 @@
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+
+  <style>
+    body {
+      text-align: center;
+      background: linear-gradient(to top, #ffe410, #60c904, #04c95d, #04c4c9, #ffffff, #ffffff, #ffffff);
+      background-attachment: fixed;
+    }
+    html, body {
+     margin: 0;
+     padding: 0;
+      min-height: 100vh;
+    }
+
+    .testclass {
+      border: 2px solid black;
+      width: 250px;
+      margin: 20px auto;
+      border-radius: 35px;
+    }
+    .commonrarity {
+      background-color: #ababab;
+    }
+    .uncommonrarity {
+      background-color: #85d26d;
+    }
+    .monsterknop {
+      font-size: 30px;
+      border-radius: 15px;
+    }
+    .epicrarity {
+      background-color: #a155c2;
+    }
+    .ultra-rare-rarity {
+      background: linear-gradient(to top right, #fa0050,#fa6900,#b9c54c,#6fbf6a,#2d95da,#a561bf);
+    }
+    .godlyrarity {
+      box-shadow: 0 0 20px gold;
+      background-color: white;
+    }
+    .hellrarity {
+      background-color: black;
+      color: red;
+      box-shadow: 0 0 20px red;
+    }
+    #versiontext {
+      top: 1px;
+      right: 3px;
+      position: absolute;
+      border: none;
+    }
+    .switchbtn {
+      position: absolute ;
+      top: 3px;
+    }
+    
+   .nightbackground {
+     background: linear-gradient(to top, #ba7ccc, #71178b, #2d147a, #02033f, #010131, #000000 );
+     background-attachment: fixed;
+   }
+   .nightbutton {
+     background-color: black;
+     color: white;
+   }
+    
+   #backswitch {
+     top: 10px;
+     left: 10px;
+     position: absolute;
+   }
+   #adminbtn {
+     position: fixed;
+     left: 3px;
+     bottom: 3px;
+     opacity: 0;
+   }
+   #adminopenknop {
+     position: fixed;
+     left 3px;
+     bottom: 20px;
+     display: none;
+   }
+   #adminmenu {
+     display: none;
+     top: 0;
+     left: 0;
+     position: fixed;
+     width: 100%;
+     height: 100vh;
+     background-color: black;
+     z-index: 9999;
+     color: white;
+   }
+   #admincloser {
+     top: 10px;
+     left: 10px;
+     position: absolute;
+   }
+  </style>
+</head>
+<body>
+  <button class="monsterknop" id="monsterbtn" onclick="krijgmonster()">get your monster!</button>
+  <button onclick="versionswitch()" id="versiontext">v1.0.2</button>
+  <button id="backswitch" onclick="backgroundswitch()">🌌</button>
+  <button onclick="admincheck()" id="adminbtn">admin</button>
+  <button onclick="openadmin()" id="adminopenknop">admin menu</button>
+  
+  <div id="adminmenu">
+    <button id="admincloser" onclick="closeadmin()">❌️</button>
+    
+    <p>set hellbound chances:</p>
+    <input id="hellchanceset"> 
+    <button onclick="hellchanceconfirm()">confirm</button>
+  </div>
+  
+  <script src="Monsterlist.js?v=2"></script>
+  
+   <script>
+     
+     
+     //variables
+   let totaltries = 0;
+   let neededchanceone = 0.003;
+   let neededchancetwo = 0.001;
+   let neededchancethree = 0.0001;
+   let versionbtn = false;
+   let godlyreset = false;
+   let ultraRareReset = false;
+   
+   console.log(neededchancethree * 100)
+   //krijgmonster
+    function krijgmonster() {
+      totaltries = totaltries + 1
+      let monster;
+      let chance = Math.random();
+      
+      //pity system
+      if (totaltries >= 50) {
+        neededchanceone = neededchanceone * 2
+        neededchancetwo = neededchancetwo * 2
+        neededchancethree = neededchancethree + 0.0002
+        totaltries = 0
+        console.log("gained upgrade");
+        console.log("ultra-rare odds now: " + (neededchanceone - neededchancetwo) * 100 + "%");
+        console.log("godly odds now: " + neededchancetwo * 100 + "%");
+        console.log("hellbound odds now: " + neededchancethree * 100 + "%")
+      }
+      
+      //extra rarities system
+    
+      if (chance <= neededchancethree) {
+       let randomIndex = Math.floor(Math.random() * hellboundmonster.length);
+        monster = hellboundmonster[randomIndex];
+    }else if (chance <= neededchancetwo) {
+       let randomIndex = Math.floor(Math.random() * godlymonster.length);
+        monster = godlymonster[randomIndex];
+      } else if (chance <= neededchanceone) {
+       let randomIndex = Math.floor(Math.random() * ultrararemonster.length);
+        monster = ultrararemonster[randomIndex];
+      }  else {
+        let randomIndex = Math.floor(Math.random() * monsters.length);
+        monster = monsters[randomIndex];
+      }
+     
+   //creating monster card
+      let randommonstername = monster.name;
+      let randommonsterrarity = monster.rarity;
+      let randommonsterdescription = monster.description;
+      let randommonstertype = monster.type;
+      
+     let monstercard = document.createElement("div");
+     let monstercardname = document.createElement("h2");
+     let monstercarddescription = document.createElement("p");
+     let monstercardtype = document.createElement("p")
+      
+     monstercardname.innerText = randommonstername
+     monstercarddescription.innerText = randommonsterdescription
+     monstercardtype.innerText = randommonstertype
+     
+     document.body.appendChild(monstercard);
+     monstercard.classList.add("testclass");
+     monstercard.appendChild(monstercardname);
+     monstercard.appendChild(monstercarddescription);
+     monstercard.appendChild(monstercardtype)
+     monstercardtype.classList.add("typeclass")
+     
+  //rarities
+     if (randommonsterrarity === "common") {
+       monstercard.classList.add("commonrarity");
+     } else if (randommonsterrarity === "uncommon") {
+       monstercard.classList.add("uncommonrarity");
+     } else if (randommonsterrarity === "epic") {
+       monstercard.classList.add("epicrarity");
+     } else if (randommonsterrarity === "ultra-rare") {
+       monstercard.classList.add("ultra-rare-rarity");
+       } else if (randommonsterrarity === "godly") {
+         monstercard.classList.add("godlyrarity")
+       } else if (randommonsterrarity === "hellbound") {
+         monstercard.classList.add("hellrarity")
+       }
+       
+       //pity resets
+       if (randommonsterrarity === "godly" && neededchancetwo > 0.1) {
+       neededchancetwo = 0.01
+       console.log("godly kans nu 1%")
+       } else if (randommonsterrarity === "godly") {
+         console.log("godly chance word 0.5%");
+         neededchancetwo = 0.005
+       } else if (randommonsterrarity === "ultra-rare") {
+        neededchanceone = 0.01
+        console.log("ultra chance word 1%!")
+       }
+         
+       //remove card
+       monstercard.onclick = function() {
+       monstercard.remove()
+       }
+    }
+    
+    //versionswitch
+    function versionswitch() {
+      console.log("starting version switch...");
+    if (versionbtn === false) { versionto =  document.createElement("a");
+     versionto.innerText = "go to version switcher"
+     versionto.href = "../index.html"
+     document.body.appendChild(versionto)
+     versionto.classList.add("switchbtn")
+     versionbtn = true;
+     
+     document.getElementById("versiontext").style.display = "none"
+    }
+    
+    }
+  
+  //background system
+  function backgroundswitch() {
+    document.body.classList.toggle("nightbackground");
+    document.getElementById("monsterbtn").classList.toggle("nightbutton")
+  }
+  
+  //admin system
+  function admincheck() {
+  let password = prompt("admin")
+  if (password === "Kitlovescookies") {
+    alert("welkom admin")
+    document.getElementById("adminopenknop").style.display = "block"
+  }
+  }
+  
+  function openadmin() {
+    document.getElementById("adminmenu").style.display = "block"
+  }
+  
+  function closeadmin() {
+    document.getElementById("adminmenu").style.display = "none"
+  }
+  
+  //chance editing admins 
+  function hellchanceconfirm() {
+    hellchanceinput = document.getElementById("hellchanceset").value / 100;
+    neededchancethree = hellchanceinput;
+    console.log(neededchancethree)
+  }
+  </script>
+</body> 
